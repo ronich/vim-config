@@ -23,13 +23,14 @@ set showmatch
 set number
 filetype off                  " required
 highlight BadWhitespace ctermbg=red guibg=red
-:set colorcolumn=+1 " highlight column at textwidth
+let &colorcolumn="80,".join(range(120,999),",")
 
 " Enable folding
 nnoremap <space> za
 
 " Enable fast searching nnoremap 
 nnoremap <Leader>' :Ag<SPACE>
+nnoremap <Leader>; :Ag!<CR>
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -136,6 +137,7 @@ syntax on
 
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 autocmd vimenter * NERDTree
+:let g:NERDTreeWinSize=60
 au VimEnter * wincmd l
 
 " Augmenting Ag command using fzf#vim#with_preview function
