@@ -49,6 +49,7 @@ set rtp+=/usr/local/opt/fzf
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
+Plugin 'ervandew/supertab'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'Valloric/YouCompleteMe'
@@ -64,9 +65,21 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'Yggdroot/indentLine'
 Plugin 'jacoborus/tender.vim'
 Plugin 'w0ng/vim-hybrid'
+Plugin 'lervag/vimtex'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 
 " add all your plugins here (note older versions of Vundle
 " used Bundle instead of Plugin)
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " Airline
 let g:airline_theme='tender'
@@ -77,6 +90,15 @@ set backspace=indent,eol,start
 " Splitting
 set splitbelow
 set splitright
+
+" Easy file delete
+nnoremap <leader>rm :call delete(expand('%')) \| bdelete!<CR>
+
+" Tryharding - disable arrows
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
 
 " Alternative split navigations
 nnoremap <C-J> <C-W><C-J>
@@ -99,7 +121,7 @@ au BufNewFile,BufRead *.py
     \ set tabstop=4 |
     \ set softtabstop=4 |
     \ set shiftwidth=4 |
-    \ set textwidth=79 |
+"    \ set textwidth=79 |
     \ set expandtab |
     \ set autoindent |
     \ set fileformat=unix
@@ -129,8 +151,17 @@ if 'VIRTUAL_ENV' in os.environ:
   exec(open(activate_this).read(), dict(__file__=activate_this))
 EOF
 
+let g:flake8_show_in_file=1  " show
 let python_highlight_all=1
 syntax on
+
+highlight link Flake8_Error      Error
+highlight link Flake8_Warning    WarningMsg
+highlight link Flake8_Complexity WarningMsg
+highlight link Flake8_Naming     WarningMsg
+highlight link Flake8_PyFlake    WarningMsg
+
+autocmd BufWritePost *.py call Flake8()
 
 "set background=dark
 "colorscheme zenburn 
@@ -138,7 +169,12 @@ syntax on
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 autocmd vimenter * NERDTree
 :let g:NERDTreeWinSize=60
+nmap <F6> :NERDTreeToggle<CR>
+
 au VimEnter * wincmd l
+
+" don't convert math symbols in latex
+let g:tex_conceal = ""
 
 " Augmenting Ag command using fzf#vim#with_preview function
 "   * fzf#vim#with_preview([[options], [preview window], [toggle keys...]])
