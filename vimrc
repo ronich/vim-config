@@ -21,6 +21,7 @@ set guioptions=	"remove scrollbars on macvim
 set nocompatible              " required
 set showmatch
 set number
+set rnu
 filetype off                  " required
 highlight BadWhitespace ctermbg=red guibg=red
 let &colorcolumn="80,".join(range(120,999),",")
@@ -106,6 +107,12 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" Navigating terminal
+tnoremap <C-w>h <C-\><C-n><C-w>h
+tnoremap <C-w>j <C-\><C-n><C-w>j
+tnoremap <C-w>k <C-\><C-n><C-w>k
+tnoremap <C-w>l <C-\><C-n><C-w>l
+
 " Enable folding
 set foldmethod=indent
 set foldlevel=99
@@ -148,7 +155,10 @@ import sys
 if 'VIRTUAL_ENV' in os.environ:
   project_base_dir = os.environ['VIRTUAL_ENV']
   activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  exec(open(activate_this).read(), dict(__file__=activate_this))
+  try:
+    exec(open(activate_this).read(), dict(__file__=activate_this))
+  except:
+    pass
 EOF
 
 let g:flake8_show_in_file=1  " show
