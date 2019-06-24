@@ -171,8 +171,6 @@ highlight link Flake8_Complexity WarningMsg
 highlight link Flake8_Naming     WarningMsg
 highlight link Flake8_PyFlake    WarningMsg
 
-autocmd BufWritePost *.py call Flake8()
-
 "set background=dark
 "colorscheme zenburn 
 
