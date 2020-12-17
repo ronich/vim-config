@@ -149,7 +149,7 @@ map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 "python with virtualenv support
-py3 << EOF
+python3 << EOF
 import os
 import sys
 if 'VIRTUAL_ENV' in os.environ:
@@ -160,6 +160,16 @@ if 'VIRTUAL_ENV' in os.environ:
   except:
     pass
 EOF
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_python_checkers = ['mypy', 'flake8']
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 1
 
 let g:flake8_show_in_file=1  " show
 let python_highlight_all=1
