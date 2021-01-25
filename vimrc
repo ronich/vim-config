@@ -11,7 +11,7 @@ filetype plugin indent on
 set encoding=utf-8
 set backspace=indent,eol,start
 set clipboard=unnamed
-set noexpandtab
+set expandtab
 set copyindent
 set preserveindent
 set softtabstop=0
@@ -214,7 +214,8 @@ command! -bang -nargs=* Ag
 set clipboard=unnamed
 
 ""Custom
-nnoremap gL :call python_label_thing#PythonGetLabel()<CR>
+nnoremap gL :call pythonlabel#PythonGetLabel()<CR>
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
